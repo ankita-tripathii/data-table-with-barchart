@@ -2,7 +2,7 @@ const initialState = {
   data: [],
   checkedRows: [],
   selectedRows: [], // Add selectedRows array
-  priceData: [], // New property for storing prices of selected rows
+  ratingData: [], // New property for storing prices of selected rows
 };
 
 const dataReducer = (state = initialState, action) => {
@@ -32,7 +32,7 @@ const dataReducer = (state = initialState, action) => {
         ...state,
         checkedRows: initialCheckedRows,
         selectedRows: initialCheckedRows,
-        priceData: initialCheckedRows.map((row) => row.rating),
+        ratingData: initialCheckedRows.map((row) => row.rating),
       };
     case 'REMOVE_UNCHECKED_ROWS':
       const updatedData = state.data.map((row) =>
@@ -46,12 +46,12 @@ const dataReducer = (state = initialState, action) => {
         data: updatedData,
         checkedRows: state.checkedRows.filter((row) => row.checked),
         selectedRows: state.checkedRows.filter((row) => row.checked),
-        priceData: state.checkedRows.filter((row) => row.checked).map((row) => row.rating),
+        ratingData: state.checkedRows.filter((row) => row.checked).map((row) => row.rating),
       };
     case 'SET_PRICE_DATA':
       return {
         ...state,
-        priceData: action.payload,
+        ratingData: action.payload,
       };
     default:
       return state;

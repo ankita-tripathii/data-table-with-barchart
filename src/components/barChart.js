@@ -4,13 +4,13 @@ import Plotly from 'plotly.js-basic-dist';
 
 const BarChart = () => {
   const dispatch = useDispatch();
-  const priceData = useSelector((state) => state.data.priceData);
+  const selectedRows  = useSelector((state) => state.data.selectedRows );
 
   useEffect(() => {
      const chartData = [
       {
-        x: priceData.map((product) => product.title),
-        y: priceData.map((product) => product.rating),
+        x: selectedRows .map((product) => product.title),
+        y: selectedRows .map((product) => product.rating),
         type: 'bar',
       },
     ];
@@ -21,7 +21,7 @@ const BarChart = () => {
     if (chartElement) {
       Plotly.newPlot(chartElement, chartData, layout);
     }
-  }, [priceData]);
+  }, [selectedRows ]);
 
   return <div id="barChart" className="mt-4"></div>;
 };

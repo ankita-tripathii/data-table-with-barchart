@@ -26,8 +26,8 @@ const ApiService = {
       throw error;
     }
   },
-  
-fetchPaginatedData: async (page, pageSize, skip) => {
+
+fetchPaginatedData: async (pageSize, skip) => {
   try {
     const response = await fetch(`https://dummyjson.com/products?limit=${pageSize}&skip=${skip}`);
     const { products, total } = await response.json();

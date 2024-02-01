@@ -30,7 +30,6 @@ const DataTable = () => {
     dispatch({ type: 'REMOVE_UNCHECKED_ROWS' });
   }
 
-  console.log('New Checked Rows:', newCheckedRows);
   };
 
 
