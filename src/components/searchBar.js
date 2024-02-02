@@ -33,13 +33,6 @@ const SearchBar = ({ onDataFiltered }) => {
     };
   }, [searchTerm, onDataFiltered, searchData]);
 
-  const handleKeyUp = (e) => {
-    if (e.key === 'Enter') {
-      // Trigger search when Enter key is pressed
-      handleSearch();
-    }
-  };
-
   return (
     <div className="input-group mb-3">
       <input

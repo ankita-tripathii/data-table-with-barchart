@@ -12,3 +12,8 @@ export const setCheckedRows = (rows) => ({
   type: 'SET_CHECKED_ROWS',
   payload: rows,
 });
+
+export const setRatingData = (ratingData) => ({
+  type: 'SET_RATING_DATA',
+  payload: ratingData,
+});

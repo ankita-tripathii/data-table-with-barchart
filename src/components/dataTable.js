@@ -1,6 +1,6 @@
 import React, {useEffect} from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { setCheckedRows, updateSelectedRows } from '../redux/action/action';
+import { setCheckedRows, updateSelectedRows, setRatingData } from '../redux/action/action';
 
 const DataTable = ({ data }) => {
 
@@ -8,16 +8,19 @@ const DataTable = ({ data }) => {
   const checkedRows = useSelector((state) => state.data.checkedRows);
 
   useEffect(() => {
-    // Initialize only the first 5 checkboxes
-    if (data.length > 0 && checkedRows.length === 0) {
-      const initialCheckedRows = data.slice(0, 5).map((row) => ({
-        ...row,
-        checked: true,
-      }));
-      dispatch(setCheckedRows(initialCheckedRows));
-      dispatch(updateSelectedRows(initialCheckedRows));
-    }
-  }, [data, checkedRows, dispatch]);
+  console.log('Data:', data);
+  console.log('Checked Rows:', checkedRows);
+
+  // Initialize only the first 5 checkboxes when data is available
+  if (data.length > 0 && checkedRows.length === 0) {
+    const initialCheckedRows = data.slice(0, 5).map((row) => ({
+      ...row,
+      checked: true,
+    }));
+    dispatch(setCheckedRows(initialCheckedRows));
+    dispatch(updateSelectedRows(initialCheckedRows));
+  }
+}, [data, checkedRows.length, dispatch]);
 
  const handleCheckboxChange = (rowId) => {
   const updatedData = data.map((row) =>
@@ -25,10 +28,13 @@ const DataTable = ({ data }) => {
   );
 
   const newCheckedRows = updatedData.filter((row) => row.checked);
+  const newRatingData = newCheckedRows.map((row) => row.rating);
 
   dispatch(setCheckedRows(newCheckedRows));
   dispatch(updateSelectedRows(newCheckedRows));
+  dispatch(setRatingData(newRatingData)); // Update rating data
 };
+
   // Check if data is an array
   if (!Array.isArray(data)) {
     console.error('Invalid data format: data must be an array.');
