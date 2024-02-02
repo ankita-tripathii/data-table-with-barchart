@@ -11,7 +11,6 @@ fetchPaginatedData: async (pageSize, skip) => {
       brand: product.brand,
       category: product.category,
       rating: product.rating,
-      checked: false,
     }));
 
     return { paginatedData, total };
@@ -33,7 +32,6 @@ fetchPaginatedData: async (pageSize, skip) => {
         brand: product.brand,
         category: product.category,
         rating: product.rating,
-        checked: false, // Initially not checked
       }));
 
       return searchData;

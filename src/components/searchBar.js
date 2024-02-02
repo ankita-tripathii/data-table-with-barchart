@@ -1,17 +1,14 @@
 import React, { useState, useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { setData } from '../redux/action/action';
 import ApiService from '../services/apiServices';
 
-const SearchBar = () => {
+const SearchBar = ({ onDataFiltered }) => {
   const [searchTerm, setSearchTerm] = useState('');
-  const dispatch = useDispatch();
-  const data = useSelector((state) => state.data.data);
+  const [searchData, setSearchData] = useState([]);
 
   const handleSearch = async () => {
     try {
       const response = await ApiService.searchData(searchTerm);
-      dispatch(setData(response));
+      setSearchData(response);
     } catch (error) {
       console.error('Error fetching search data:', error);
     }
@@ -23,23 +20,18 @@ const SearchBar = () => {
       if (searchTerm.trim() !== '') {
         handleSearch();
       } else {
-        // If search term is empty, fetch all data
-        const fetchData = async () => {
-          try {
-            const response = await ApiService.fetchData();
-            dispatch(setData(response));
-          } catch (error) {
-            console.error('Error fetching data:', error);
-          }
-        };
-
-        fetchData();
+        // If search term is empty, clear the search data
+        setSearchData([]);
       }
-    }, 500);
+    }, 200);
 
-    return () => clearTimeout(timeoutId);
+    return () => {
+      clearTimeout(timeoutId);
 
-  }, [searchTerm, dispatch]);
+      // Communicate search results to parent component after clearing timeout
+      onDataFiltered(searchData);
+    };
+  }, [searchTerm, onDataFiltered, searchData]);
 
   const handleKeyUp = (e) => {
     if (e.key === 'Enter') {
@@ -56,7 +48,7 @@ const SearchBar = () => {
         placeholder="Search..."
         value={searchTerm}
         onChange={(e) => setSearchTerm(e.target.value)}
-        onKeyUp={handleKeyUp}
+        
       />
     </div>
   );

@@ -1,7 +1,6 @@
 import React from 'react';
 import BarChart from './barChart';
 import ParentComponent from './parantComponent';
-import SearchBar from './searchBar';
 import Sidebar from './sideBar';
 
 const Dashboard = () => {
@@ -11,7 +10,6 @@ const Dashboard = () => {
         <Sidebar />
         <div className="col-md-9 ml-sm-auto col-lg-10 px-md-4">
           <BarChart />
-          <SearchBar />
           <ParentComponent/>
         </div>
       </div>

@@ -1,9 +1,8 @@
 import React, { useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 import Plotly from 'plotly.js-basic-dist';
 
 const BarChart = () => {
-  const dispatch = useDispatch();
   const selectedRows  = useSelector((state) => state.data.selectedRows );
 
   useEffect(() => {

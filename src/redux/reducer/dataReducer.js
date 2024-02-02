@@ -1,17 +1,16 @@
 const initialState = {
   data: [],
   checkedRows: [],
-  selectedRows: [], // Add selectedRows array
-  ratingData: [], 
+  selectedRows: [],
+  ratingData: [],
 };
 
 const dataReducer = (state = initialState, action) => {
   switch (action.type) {
-
     case 'SET_DATA':
       return {
         ...state,
-        data: [...state.data, ...action.payload], // Append new data to existing data
+        data: [...state.data, ...action.payload],
       };
 
     case 'UPDATE_SELECTED_ROWS':
@@ -24,39 +23,44 @@ const dataReducer = (state = initialState, action) => {
       return {
         ...state,
         checkedRows: action.payload,
+        ratingData: action.payload.map((row) => row.rating),
       };
 
     case 'INITIALIZE_CHECKED_ROWS':
-  const initialCheckedRows = state.data.slice(0, 5).map((row) => ({
-    ...row,
-    checked: true,
-  }));
-  return {
-    ...state,
-    checkedRows: initialCheckedRows,
-    selectedRows: initialCheckedRows,
-    ratingData: initialCheckedRows.map((row) => row.rating),
-  };
+      const initialCheckedRows = state.data.slice(0, 5).map((row) => ({
+        ...row,
+        checked: true,
+      }));
+      return {
+        ...state,
+        checkedRows: initialCheckedRows,
+        selectedRows: initialCheckedRows,
+        ratingData: initialCheckedRows.map((row) => row.rating),
+      };
 
-   case 'REMOVE_UNCHECKED_ROWS':
-  const updatedData = state.data.map((row) =>
-    state.checkedRows.find((checkedRow) => checkedRow.id === row.id && checkedRow.checked)
-      ? row
-      : { ...row, checked: false }
-  );
+    case 'REMOVE_UNCHECKED_ROWS':
+      const updatedData = state.data.filter((row) =>
+        state.checkedRows.find(
+          (checkedRow) => checkedRow.id === row.id && checkedRow.checked
+        )
+      );
 
-  return {
-    ...state,
-    data: updatedData,
-    checkedRows: state.checkedRows.filter((row) => row.checked),
-    selectedRows: state.checkedRows.filter((row) => row.checked),
-    ratingData: state.checkedRows.filter((row) => row.checked).map((row) => row.rating),
-  };
-    case 'SET_PRICE_DATA':
+      return {
+        ...state,
+        data: updatedData,
+        checkedRows: state.checkedRows.filter((row) => row.checked),
+        selectedRows: state.checkedRows.filter((row) => row.checked),
+        ratingData: state.checkedRows
+          .filter((row) => row.checked)
+          .map((row) => row.rating),
+      };
+
+    case 'SET_Rating_DATA':
       return {
         ...state,
         ratingData: action.payload,
       };
+
     default:
       return state;
   }
