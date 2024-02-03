@@ -12,6 +12,7 @@ const BarChart = ({ data }) => {
       return {
         x: [selectedRow.title],
         y: [selectedRow.rating],
+        width: [0.9],
         type: 'bar',
         name: `ID: ${selectedRow.id}`,
       };
@@ -21,20 +22,22 @@ const BarChart = ({ data }) => {
   });
 
   return (
-    <div className=" mb-4">
-      <Plot data={chartData.filter((item) => item !== null)} // Filter out null values
+    <div className="bar-chart-container">
+      <Plot
+        data={chartData.filter((item) => item !== null)}
         layout={{
-          width: 330,
-          height: 400,
+          autosize: true, // Enable autosizing
+          margin: { l: 70, r: 50, b: 70, t: 50,},
+          marker: { line: { width: 10 }, },
           yaxis: {
             title: {
               text: 'Rating',
               font: {
-                size: 14,
+                size: 20,
               },
             },
           },
-          bargap: 0.05, // Adjust the gap between bars
+          bargap: 0.02,
         }}
         className="col-lg-12 col-md-12 col-sm-12 col-12"
       />

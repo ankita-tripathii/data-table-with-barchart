@@ -59,3 +59,8 @@ button {
   padding: 5px 10px;
 }
 
+.bar-chart-container {
+  width: 100%;
+  max-width: 400px; /* Adjust the maximum width as needed */
+  margin: 0 auto; /* Center the chart horizontally */
+}

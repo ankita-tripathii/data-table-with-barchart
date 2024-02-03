@@ -13,25 +13,19 @@ const Report = () => {
   const [totalPages, setTotalPages] = useState(1);
   const [data, setData] = useState([]);
   const [searchResults, setSearchResults] = useState([]);
-  const [loading, setLoading] = useState(false);
 
 
   const selectedRows = useSelector((state) => state.data.checkedRows);
   const dispatch = useDispatch();
 
  useEffect(() => {
-
-  // // Initialize checked rows if not already initialized
-  //   if (selectedRows.length === 0) {
-  //     initializeCheckedRows(dispatch);
-  //   }
+  
     // Fetch data and initialize checked rows when the component mounts
     fetchData(currentPage);
   }, [currentPage, dispatch]);
 
   const fetchData = async (page) => {
     try {
-      setLoading(true);
       const pageSize = PAGE_SIZE;
       const skip = (page - 1) * pageSize;
       const response = await fetch(`https://dummyjson.com/products?limit=${pageSize}&skip=${skip}`);
@@ -52,18 +46,11 @@ const Report = () => {
         checked: selectedRows.includes(product.id),
       }));
 
-      // Append only new data to the existing data
-      setData((prevData) => {
-        const newData = paginatedData.filter((item) => !prevData.some((existing) => existing.id === item.id));
-        return [...prevData, ...newData];
-      });
-      
+      setData(paginatedData);
       setTotalPages(Math.ceil(total / pageSize));
     } catch (error) {
       console.error('Error fetching paginated data:', error);
-    } finally {
-       setLoading(false);
-    }
+    } 
   };
 
   const handlePageChange = (page) => {
@@ -89,16 +76,13 @@ const Report = () => {
       <div className="mb-4">
         <DataTable data={searchResults.length > 0 ? searchResults : data} handleCheckboxChange={handleCheckboxChange} />
       </div>
-      {currentPage < totalPages && ( // Check if current page is less than total pages
         <div className="mb-4">
           <Pagination
             currentPage={currentPage}
             totalPages={totalPages}
             onPageChange={handlePageChange}
-            loading={loading}
           />
         </div>
-      )}
     </div>
   );
 };

@@ -1,6 +1,6 @@
 import React from 'react';
 
-const Pagination = ({ currentPage, totalPages, onPageChange, loading }) => {
+const Pagination = ({ currentPage, totalPages, onPageChange}) => {
   const pages = Array.from({ length: totalPages }, (_, index) => index + 1);
 
   return (
@@ -15,7 +15,7 @@ const Pagination = ({ currentPage, totalPages, onPageChange, loading }) => {
                 <button
                   className="page-link"
                   onClick={() => onPageChange(page)}
-                  disabled={currentPage === page || loading}
+                  disabled={currentPage === page}
                 >
                   {page}
                 </button>
