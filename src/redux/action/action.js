@@ -1,19 +1,9 @@
-export const setData = (data) => ({
-  type: 'SET_DATA',
-  payload: data,
+export const toggleCheckedRow = (id) => ({
+  type: 'TOGGLE_CHECKED_ROW',
+  payload: { id },
 });
 
-export const updateSelectedRows = (selectedRows) => ({
-  type: 'UPDATE_SELECTED_ROWS',
-  payload: selectedRows,
-});
-
-export const setCheckedRows = (rows) => ({
-  type: 'SET_CHECKED_ROWS',
-  payload: rows,
-});
-
-export const setRatingData = (ratingData) => ({
-  type: 'SET_RATING_DATA',
-  payload: ratingData,
+export const initializeCheckedRows = (initialCheckedRows) => ({
+  type: 'INITIALIZE_CHECKED_ROWS',
+  payload: { initialCheckedRows },
 });

@@ -1,47 +1,58 @@
 import React, { useState, useEffect } from 'react';
-import ApiService from '../services/apiServices';
 
 const SearchBar = ({ onDataFiltered }) => {
   const [searchTerm, setSearchTerm] = useState('');
   const [searchData, setSearchData] = useState([]);
 
-  const handleSearch = async () => {
+  const handleSearch = async (query) => {
     try {
-      const response = await ApiService.searchData(searchTerm);
-      setSearchData(response);
+      if (query.trim() !== '') {
+        const response = await fetch(`https://dummyjson.com/products/search?q=${query}`);
+        const { products } = await response.json();
+
+        const searchData = products.map((product) => ({
+          id: product.id,
+          title: product.title,
+          brand: product.brand,
+          category: product.category,
+          rating: product.rating,
+          checked: false,
+        }));
+
+        setSearchData(searchData);
+      }
     } catch (error) {
       console.error('Error fetching search data:', error);
     }
   };
 
   useEffect(() => {
-    // Delay the search to avoid frequent API calls while typing
-    const timeoutId = setTimeout(() => {
-      if (searchTerm.trim() !== '') {
-        handleSearch();
-      } else {
-        // If search term is empty, clear the search data
-        setSearchData([]);
+    const handleEnterKeyPress = (e) => {
+      if (e.key === 'Enter') {
+        handleSearch(searchTerm);
       }
-    }, 200);
+    };
+
+    document.addEventListener('keydown', handleEnterKeyPress);
 
     return () => {
-      clearTimeout(timeoutId);
-
-      // Communicate search results to parent component after clearing timeout
-      onDataFiltered(searchData);
+      document.removeEventListener('keydown', handleEnterKeyPress);
     };
-  }, [searchTerm, onDataFiltered, searchData]);
+  }, [searchTerm]);
+
+  useEffect(() => {
+    // Communicate search results to the parent component
+    onDataFiltered(searchData);
+  }, [searchData, onDataFiltered]);
 
   return (
-    <div className="input-group mb-3">
+    <div className="input-group mb-4 col-lg-11 col-md-11 col-sm-11 col-11">
       <input
         type="text"
         className="form-control"
         placeholder="Search..."
         value={searchTerm}
         onChange={(e) => setSearchTerm(e.target.value)}
-        
       />
     </div>
   );

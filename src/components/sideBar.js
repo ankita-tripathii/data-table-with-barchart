@@ -1,36 +1,17 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
 
 const Sidebar = () => {
-  const [sidebarVisible, setSidebarVisible] = useState(false);
-
-  const toggleSidebar = () => {
-    setSidebarVisible(!sidebarVisible);
-  };
-
   return (
-    <nav className={`col-md-2 ${sidebarVisible ? '' : 'd-none d-md-block'} bg-dark sidebar`}>
-      <button
-        className="navbar-toggler d-md-none"
-        type="button"
-        onClick={toggleSidebar}
-        aria-controls="sidebar"
-        aria-expanded={sidebarVisible}
-        aria-label="Toggle sidebar"
-      >
-        <span className="navbar-toggler-icon"></span>
-      </button>
-      <div className={`sidebar-sticky${sidebarVisible ? ' visible' : ''}`}>
-        <ul className="nav flex-column">
+     
+      <div>
+        <ul className="nav flex-column" style={{ backgroundColor: 'rgba(169, 169, 169, 0.5)', textAlign: 'center' }}>
           <li className="nav-item">
-            <Link to="/" className="nav-link text-light">
-              Dashboard
-            </Link>
+            <Link to="/" className="nav-link text-light"> Dashboard </Link>
           </li>
-          {/* Add more navigation items as needed */}
         </ul>
       </div>
-    </nav>
+  
   );
 };
 

@@ -1,39 +1,45 @@
-import React, { useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import { setRatingData } from '../redux/action/action';
-import Plotly from 'plotly.js-basic-dist';
+import React from 'react';
+import Plot from 'react-plotly.js';
+import { useSelector } from 'react-redux';
 
-const BarChart = () => {
-  const dispatch = useDispatch();
-  const selectedRows  = useSelector((state) => state.data.selectedRows );
+const BarChart = ({ data }) => {
+  const checkedRows = useSelector((state) => state.data.checkedRows);
 
-  useEffect(() => {
+  const chartData = checkedRows.map((id) => {
+    const selectedRow = data.find((row) => row.id === id);
 
-    console.log('Selected Rows:', selectedRows);
-
-    // Extract the ratings from selectedRows
-  const ratingData = selectedRows.map((product) => product.rating);
-
-  // Dispatch setRatingData with the extracted ratings
-  dispatch(setRatingData(ratingData));
-
-     const chartData = [
-      {
-        x: selectedRows .map((product) => product.title),
-        y: selectedRows .map((product) => product.rating),
+    if (selectedRow) {
+      return {
+        x: [selectedRow.title],
+        y: [selectedRow.rating],
         type: 'bar',
-      },
-    ];
-
-    const layout = { width: 600, height: 400, title: 'Rating Chart', yaxis: { title: 'Rating' } };
-
-    const chartElement = document.getElementById('barChart');
-    if (chartElement) {
-      Plotly.newPlot(chartElement, chartData, layout);
+        name: `ID: ${selectedRow.id}`,
+      };
     }
-  }, [selectedRows, dispatch]);
 
-  return <div id="barChart" className="mt-4"></div>;
+    return null;
+  });
+
+  return (
+    <div className=" mb-4">
+      <Plot data={chartData.filter((item) => item !== null)} // Filter out null values
+        layout={{
+          width: 330,
+          height: 400,
+          yaxis: {
+            title: {
+              text: 'Rating',
+              font: {
+                size: 14,
+              },
+            },
+          },
+          bargap: 0.05, // Adjust the gap between bars
+        }}
+        className="col-lg-12 col-md-12 col-sm-12 col-12"
+      />
+    </div>
+  );
 };
 
 export default BarChart;

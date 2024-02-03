@@ -1,12 +1,11 @@
 import React from 'react';
 
-const Pagination = ({ currentPage, totalPages, onPageChange }) => {
+const Pagination = ({ currentPage, totalPages, onPageChange, loading }) => {
   const pages = Array.from({ length: totalPages }, (_, index) => index + 1);
 
   return (
-    <div>
-      <div className="d-flex justify-content-center mt-4">
-        <nav aria-label="Page navigation">
+      <div className="d-flex justify-content-center col-lg-11 col-md-11 col-sm-10 col-10">
+        <nav>
           <ul className="pagination">
             {pages.map((page) => (
               <li
@@ -16,7 +15,7 @@ const Pagination = ({ currentPage, totalPages, onPageChange }) => {
                 <button
                   className="page-link"
                   onClick={() => onPageChange(page)}
-                  disabled={currentPage === page}
+                  disabled={currentPage === page || loading}
                 >
                   {page}
                 </button>
@@ -25,7 +24,6 @@ const Pagination = ({ currentPage, totalPages, onPageChange }) => {
           </ul>
         </nav>
       </div>
-    </div>
   );
 };
 
