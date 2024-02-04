@@ -50,7 +50,7 @@ const SearchBar = ({ onDataFiltered }) => {
       <input
         type="text"
         className="form-control"
-        placeholder="Search..."
+        placeholder="Search Title..."
         value={searchTerm}
         onChange={(e) => setSearchTerm(e.target.value)}
       />

@@ -19,7 +19,7 @@ const Report = () => {
   const dispatch = useDispatch();
 
  useEffect(() => {
-  
+
     // Fetch data and initialize checked rows when the component mounts
     fetchData(currentPage);
   }, [currentPage, dispatch]);
@@ -76,7 +76,7 @@ const Report = () => {
       <div className="mb-4">
         <DataTable data={searchResults.length > 0 ? searchResults : data} handleCheckboxChange={handleCheckboxChange} />
       </div>
-        <div className="mb-4">
+        <div className="d-flex justify-content-center">
           <Pagination
             currentPage={currentPage}
             totalPages={totalPages}
