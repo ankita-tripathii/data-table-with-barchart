@@ -64,6 +64,6 @@ Start the server
 * [Redux](https://redux.js.org/)
 * [Bootstrap](https://getbootstrap.com/)
 * [dummyjson.com](https://dummyjson.com/)
-* [bar chart visualization](https://plotly.com/javascript/)
+* [Plotly](https://plotly.com/javascript/)
 
 
