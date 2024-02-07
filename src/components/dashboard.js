@@ -9,7 +9,7 @@ const Dashboard = () => {
           <div className=" bg-dark col-lg-2 col-md-2 col-sm-11 col-xs-11 p-0">
           <Sidebar />
           </div>
-          <div className="col-lg-10 col-md-9 col-sm-11 col-xs-11 ">
+          <div className="col-lg-10 col-md-9 col-sm-9 col-xs-9 ">
           <Report />
           </div>
       </div>

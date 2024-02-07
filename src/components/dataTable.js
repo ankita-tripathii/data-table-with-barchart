@@ -1,11 +1,9 @@
 import React, {useEffect} from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import { toggleCheckedRow } from '../redux/action/action';
+import { useSelector} from 'react-redux';
 
 const DataTable = ({ data, handleCheckboxChange }) => {
 
  const checkedRows = useSelector((state) => state.data.checkedRows);
-  const dispatch = useDispatch();
 
   return (
      <div className="table-responsive">
